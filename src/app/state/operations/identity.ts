@@ -4,7 +4,7 @@ import { rLogin } from '../../../features/rLogin'
 
 import { changeAccount, changeChainId } from '../reducers/identity'
 import { resolveDidDocument } from './ethrdid'
-import { getTokenList } from './tokens'
+import { getBalance, getTokenList } from './defi'
 import { createClient, getDataVaultContent, getStorageInformation } from './datavault'
 import { createDidFormat } from '../../../formatters'
 
@@ -22,12 +22,13 @@ export const login = (context: any) => (dispatch: Dispatch<any>) =>
       dispatch(changeChainId({ chainId: parseInt(chainId) }))
 
       dispatch(resolveDidDocument(provider))
-      dispatch(getTokenList(provider, chainId, address))
+      dispatch(getTokenList(provider, parseInt(chainId), address))
+      dispatch(getBalance(provider, address))
 
       const dataVaultClient = createClient(provider, address, chainId)
       context.setDvClient(dataVaultClient)
 
-      dataVaultClient && dispatch(getDataVaultContent(dataVaultClient, createDidFormat(address, chainId, true)))
+      dataVaultClient && dispatch(getDataVaultContent(dataVaultClient, createDidFormat(address, chainId)))
       dataVaultClient && dispatch(getStorageInformation(dataVaultClient))
     })
   })
