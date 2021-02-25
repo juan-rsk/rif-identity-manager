@@ -1,4 +1,4 @@
-name: RIF IDENTITY deploy to beta.manager.identity.rifos.org
+name: RIF IDENTITY MANAGER deploy to identity.staging.rifcomputing.net
 
 on:
   pull_request:
@@ -17,11 +17,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-#    - name: Setup Node 12
-#      uses: actions/setup-node@v1
-#      with:
-#        node-version: '12'
-#
     - name: Install dependencies
       run: yarn
 
